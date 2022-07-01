@@ -37,6 +37,19 @@ async function run() {
             const task = await taskCollection.findOne(query);
             res.send(task)
         })
+        app.put('/task/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) }
+            const nameUpdate = req.body.name;
+
+            const updateDoc = {
+                $set: {
+                    name: nameUpdate,
+                }
+            };
+            const updatedTask = await taskCollection.updateOne(filter, updateDoc);
+            res.send(updatedTask)
+        })
     }
     finally {
 
